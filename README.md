@@ -1,73 +1,63 @@
-# Welcome to your Lovable project
+# Smart Traffic Control Dashboard
 
-## Project info
+A real-time, AI-powered Smart Traffic Management System for urban congestion control. This project features a beautiful, premium glassmorphic UI built with React, Vite, and Tailwind CSS, and connects to a Flask backend for real-time vehicle detection and signal optimization.
 
-**URL**: https://lovable.dev/projects/9a02cca2-71be-4b4e-b991-54dd122bc328
+![Smart Traffic Control Dashboard](https://lovable.dev/opengraph-image-p98pqg.png)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Real-Time Vehicle Counting**: Displays live data of vehicles detected at each intersection (North, South, East, West).
+- **Automated Signal Optimization**: Connects to an AI-powered Flask backend to automatically cycle and optimize traffic signals based on congestion.
+- **Manual Override Mode**: Allows operators to manually take control of traffic signals from the dashboard.
+- **Premium Glassmorphic UI**: Features a modern cyber-dark aesthetic with dynamic radial gradients, blurred glass panels, and glowing traffic indicators.
+- **Responsive Design**: Fully responsive interface tailored for both desktop and mobile traffic control centers.
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/9a02cca2-71be-4b4e-b991-54dd122bc328) and start prompting.
+- **Frontend Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom glassmorphism utilities.
+- **Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Fonts**: Outfit & Inter (Google Fonts)
+- **Backend API Reference**: Flask (Python)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You'll need Node.js and npm installed on your machine. We recommend using `nvm` (Node Version Manager).
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+1. Clone the repository:
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd tempo-traffic-control
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. Install the frontend dependencies:
+   ```bash
+   npm install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+The dashboard will be available at `http://localhost:5173/` (or the port specified in your terminal).
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### Connecting to the Backend
 
-**Edit a file directly in GitHub**
+By default, the dashboard attempts to connect to a local Flask backend at `http://127.0.0.1:5000`. 
+If the backend is offline, the dashboard gracefully falls back to a simulated traffic feed so you can still preview the UI and animations.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Structure
 
-**Use GitHub Codespaces**
+- `src/components/TrafficDashboard.tsx`: The main dashboard view containing all cards, traffic indicators, and control panels.
+- `src/index.css`: Contains all the custom theming variables, animated gradients, and glassmorphism utilities.
+- `tailwind.config.ts`: Tailwind configuration extending the theme to include our custom fonts and variables.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## License
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/9a02cca2-71be-4b4e-b991-54dd122bc328) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is open-source and available under the MIT License.

@@ -131,18 +131,18 @@ const TrafficDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dashboard-bg p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen relative p-6 font-sans overflow-hidden">
+      <div className="max-w-7xl mx-auto space-y-6 relative z-10">
         
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="p-3 bg-primary/20 rounded-lg">
+            <div className="p-3 glass-panel rounded-xl shadow-[0_0_15px_rgba(0,190,255,0.3)]">
               <Navigation className="h-8 w-8 text-primary" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Smart Traffic Control</h1>
-              <p className="text-muted-foreground">Real-time Urban Congestion Management</p>
+              <h1 className="text-4xl font-extrabold text-gradient tracking-tight mb-1">Smart Traffic Control</h1>
+              <p className="text-muted-foreground font-medium">Real-time Urban Congestion Management</p>
             </div>
           </div>
           
@@ -164,7 +164,7 @@ const TrafficDashboard = () => {
 
         {/* System Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-card border-border">
+          <Card className="glass-panel hover:-translate-y-1 transition-all duration-300">
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <Car className="h-8 w-8 text-primary" />
@@ -176,7 +176,7 @@ const TrafficDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="glass-panel hover:-translate-y-1 transition-all duration-300">
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <div className={`w-4 h-4 rounded-full ${
@@ -194,7 +194,7 @@ const TrafficDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="glass-panel hover:-translate-y-1 transition-all duration-300">
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <div className={`w-4 h-4 rounded-full ${
@@ -212,7 +212,7 @@ const TrafficDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="glass-panel hover:-translate-y-1 transition-all duration-300">
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
                 <Zap className="h-8 w-8 text-warning" />
@@ -230,7 +230,7 @@ const TrafficDashboard = () => {
           
           {/* Traffic Count Display */}
           <div className="lg:col-span-2">
-            <Card className="bg-card border-border">
+            <Card className="glass-panel">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Navigation className="h-5 w-5" />
@@ -242,10 +242,10 @@ const TrafficDashboard = () => {
                   
                   {/* North */}
                   <div className="flex justify-center">
-                    <Card className={`w-24 h-32 flex flex-col items-center justify-center transition-all duration-300 ${
+                    <Card className={`w-24 h-32 flex flex-col items-center justify-center transition-all duration-500 ${
                       getDirectionData('north').isActive 
-                        ? 'bg-traffic-green/20 border-traffic-green shadow-lg' 
-                        : 'bg-secondary border-border'
+                        ? 'bg-traffic-green/20 border-traffic-green shadow-[0_0_20px_rgba(34,197,94,0.4)]' 
+                        : 'glass-control text-muted-foreground'
                     }`}>
                       <ArrowUp className={`h-8 w-8 mb-2 ${
                         getDirectionData('north').isActive ? 'text-traffic-green' : 'text-muted-foreground'
@@ -262,10 +262,10 @@ const TrafficDashboard = () => {
 
                   {/* West */}
                   <div className="flex items-center justify-center">
-                    <Card className={`w-32 h-24 flex flex-row items-center justify-center transition-all duration-300 ${
+                    <Card className={`w-32 h-24 flex flex-row items-center justify-center transition-all duration-500 ${
                       getDirectionData('west').isActive 
-                        ? 'bg-traffic-green/20 border-traffic-green shadow-lg' 
-                        : 'bg-secondary border-border'
+                        ? 'bg-traffic-green/20 border-traffic-green shadow-[0_0_20px_rgba(34,197,94,0.4)]' 
+                        : 'glass-control text-muted-foreground'
                     }`}>
                       <ArrowLeft className={`h-8 w-8 mr-2 ${
                         getDirectionData('west').isActive ? 'text-traffic-green' : 'text-muted-foreground'
@@ -279,7 +279,7 @@ const TrafficDashboard = () => {
 
                   {/* Center - Intersection */}
                   <div className="flex items-center justify-center">
-                    <div className="w-16 h-16 bg-dashboard-control border-2 border-primary rounded-lg flex items-center justify-center">
+                    <div className="w-16 h-16 glass-control border border-primary/40 shadow-[0_0_25px_rgba(0,190,255,0.2)] rounded-lg flex items-center justify-center">
                       <div className={`w-8 h-8 rounded-full ${
                         trafficData.currentGreen === 'north' ? 'bg-traffic-green' :
                         trafficData.currentGreen === 'south' ? 'bg-traffic-green' :
@@ -293,10 +293,10 @@ const TrafficDashboard = () => {
 
                   {/* East */}
                   <div className="flex items-center justify-center">
-                    <Card className={`w-32 h-24 flex flex-row items-center justify-center transition-all duration-300 ${
+                    <Card className={`w-32 h-24 flex flex-row items-center justify-center transition-all duration-500 ${
                       getDirectionData('east').isActive 
-                        ? 'bg-traffic-green/20 border-traffic-green shadow-lg' 
-                        : 'bg-secondary border-border'
+                        ? 'bg-traffic-green/20 border-traffic-green shadow-[0_0_20px_rgba(34,197,94,0.4)]' 
+                        : 'glass-control text-muted-foreground'
                     }`}>
                       <div className="text-center mr-2">
                         <p className="text-2xl font-bold">{trafficData.east}</p>
@@ -313,10 +313,10 @@ const TrafficDashboard = () => {
 
                   {/* South */}
                   <div className="flex justify-center">
-                    <Card className={`w-24 h-32 flex flex-col items-center justify-center transition-all duration-300 ${
+                    <Card className={`w-24 h-32 flex flex-col items-center justify-center transition-all duration-500 ${
                       getDirectionData('south').isActive 
-                        ? 'bg-traffic-green/20 border-traffic-green shadow-lg' 
-                        : 'bg-secondary border-border'
+                        ? 'bg-traffic-green/20 border-traffic-green shadow-[0_0_20px_rgba(34,197,94,0.4)]' 
+                        : 'glass-control text-muted-foreground'
                     }`}>
                       <div className="text-center mb-2">
                         <p className="text-2xl font-bold">{trafficData.south}</p>
@@ -334,7 +334,7 @@ const TrafficDashboard = () => {
 
           {/* Control Panel */}
           <div className="space-y-6">
-            <Card className="bg-card border-border">
+            <Card className="glass-panel">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Settings className="h-5 w-5" />
@@ -411,7 +411,7 @@ const TrafficDashboard = () => {
             </Card>
 
             {/* Alert Panel */}
-            <Card className="bg-card border-border">
+            <Card className="glass-panel">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <AlertTriangle className="h-5 w-5 text-warning" />

@@ -2,82 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Traffic Control Center Theme - Professional Dark */
-    --background: 210 25% 8%;
-    --foreground: 210 15% 95%;
+    /* Premium Cyber-Dark Theme */
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
 
-    --card: 210 20% 12%;
-    --card-foreground: 210 15% 95%;
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 210 20% 12%;
-    --popover-foreground: 210 15% 95%;
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Traffic Authority Blue */
-    --primary: 207 90% 54%;
+    /* Neon Cyan / Blue Accent */
+    --primary: 199 89% 48%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 15% 18%;
-    --secondary-foreground: 210 15% 85%;
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 15% 16%;
-    --muted-foreground: 210 10% 60%;
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 210 15% 18%;
-    --accent-foreground: 210 15% 85%;
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
 
-    /* Traffic Signal Colors */
-    --traffic-red: 0 84% 60%;
-    --traffic-yellow: 48 96% 53%;
-    --traffic-green: 142 71% 45%;
+    /* Vibrant Traffic Colors */
+    --traffic-red: 350 100% 60%;
+    --traffic-yellow: 45 100% 55%;
+    --traffic-green: 142 80% 50%;
     
     /* Status Colors */
-    --success: 142 71% 45%;
-    --warning: 48 96% 53%;
-    --destructive: 0 84% 60%;
+    --success: 142 80% 50%;
+    --warning: 45 100% 55%;
+    --destructive: 350 100% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 210 15% 20%;
-    --input: 210 15% 18%;
-    --ring: 207 90% 54%;
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 199 89% 48%;
 
     /* Enhanced Styling */
-    --radius: 0.75rem;
-    --shadow-glow: 0 0 20px 0;
+    --radius: 1rem;
+    --shadow-glow: 0 0 25px 0;
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    /* Traffic Dashboard Specific */
-    --dashboard-bg: 210 25% 6%;
-    --control-panel: 210 20% 10%;
-    --signal-active-glow: var(--shadow-glow) hsla(var(--traffic-green), 0.3);
-    --alert-glow: var(--shadow-glow) hsla(var(--traffic-red), 0.3);
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Dashboard Specific */
+    --dashboard-bg: 222 47% 4%;
+    --control-panel: 222 47% 8%;
+    
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 217 32% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 32% 17%;
+    --sidebar-ring: 199 89% 48%;
   }
 
   .dark {
-    /* Keep same dark theme - we're already dark by default */
-    --background: 210 25% 8%;
-    --foreground: 210 15% 95%;
+    --background: 222 47% 4%;
+    --foreground: 210 40% 98%;
   }
 }
 
@@ -88,24 +74,36 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(135deg, hsl(var(--dashboard-bg)), hsl(var(--background)));
+    background: radial-gradient(circle at top right, hsl(var(--primary)/0.08) 0%, transparent 40%),
+                radial-gradient(circle at bottom left, hsl(var(--traffic-green)/0.05) 0%, transparent 40%),
+                hsl(var(--dashboard-bg));
     min-height: 100vh;
+    font-family: 'Outfit', 'Inter', sans-serif;
+  }
+  
+  /* Glassmorphism Utilities */
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)];
+  }
+
+  .glass-control {
+    @apply bg-black/40 backdrop-blur-md border border-white/5;
   }
   
   /* Traffic Control Animations */
   @keyframes pulse-green {
-    0%, 100% { box-shadow: 0 0 5px hsla(var(--traffic-green), 0.5); }
-    50% { box-shadow: 0 0 20px hsla(var(--traffic-green), 0.8); }
+    0%, 100% { box-shadow: 0 0 10px hsla(var(--traffic-green), 0.4), inset 0 0 10px hsla(var(--traffic-green), 0.2); }
+    50% { box-shadow: 0 0 30px hsla(var(--traffic-green), 0.8), inset 0 0 20px hsla(var(--traffic-green), 0.4); }
   }
   
   @keyframes pulse-red {
-    0%, 100% { box-shadow: 0 0 5px hsla(var(--traffic-red), 0.5); }
-    50% { box-shadow: 0 0 20px hsla(var(--traffic-red), 0.8); }
+    0%, 100% { box-shadow: 0 0 10px hsla(var(--traffic-red), 0.4), inset 0 0 10px hsla(var(--traffic-red), 0.2); }
+    50% { box-shadow: 0 0 30px hsla(var(--traffic-red), 0.8), inset 0 0 20px hsla(var(--traffic-red), 0.4); }
   }
   
   @keyframes pulse-yellow {
-    0%, 100% { box-shadow: 0 0 5px hsla(var(--traffic-yellow), 0.5); }
-    50% { box-shadow: 0 0 20px hsla(var(--traffic-yellow), 0.8); }
+    0%, 100% { box-shadow: 0 0 10px hsla(var(--traffic-yellow), 0.4), inset 0 0 10px hsla(var(--traffic-yellow), 0.2); }
+    50% { box-shadow: 0 0 30px hsla(var(--traffic-yellow), 0.8), inset 0 0 20px hsla(var(--traffic-yellow), 0.4); }
   }
 
   .traffic-light-green {
@@ -118,5 +116,13 @@ All colors MUST be HSL.
   
   .traffic-light-yellow {
     animation: pulse-yellow 2s infinite;
+  }
+  
+  /* Text Gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--traffic-green)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
