@@ -49,7 +49,7 @@ const TrafficDashboard = () => {
 
   const [isLive, setIsLive] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
-  const [flaskBackendUrl] = useState('http://127.0.0.1:5000');
+  const [flaskBackendUrl] = useState('/api');
 
   // Fetch real data from Flask backend
   useEffect(() => {
