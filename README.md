@@ -1,63 +1,127 @@
-# Smart Traffic Control Dashboard
+# 🚦 Smart Traffic Control Dashboard — Premium AI Management System
 
-A real-time, AI-powered Smart Traffic Management System for urban congestion control. This project features a beautiful, premium glassmorphic UI built with React, Vite, and Tailwind CSS, and connects to a Flask backend for real-time vehicle detection and signal optimization.
+A real-time, AI-powered Smart Traffic Management System for urban congestion control. This project features a visually premium glassmorphic UI built with React, Vite, and Tailwind CSS, connected to a multi-threaded Python Flask backend. The backend manages automated AI signal optimization and executes a computer vision pipeline for vehicle detection.
 
-![Smart Traffic Control Dashboard](https://lovable.dev/opengraph-image-p98pqg.png)
+---
 
-## Features
+## 📸 Screenshots
 
-- **Real-Time Vehicle Counting**: Displays live data of vehicles detected at each intersection (North, South, East, West).
-- **Automated Signal Optimization**: Connects to an AI-powered Flask backend to automatically cycle and optimize traffic signals based on congestion.
-- **Manual Override Mode**: Allows operators to manually take control of traffic signals from the dashboard.
-- **Premium Glassmorphic UI**: Features a modern cyber-dark aesthetic with dynamic radial gradients, blurred glass panels, and glowing traffic indicators.
-- **Responsive Design**: Fully responsive interface tailored for both desktop and mobile traffic control centers.
+### Glassmorphic Control Console
+![Smart Traffic Control Dashboard](./screenshots/dashboard_preview.png)
 
-## Tech Stack
+---
 
-- **Frontend Framework**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom glassmorphism utilities.
-- **Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Fonts**: Outfit & Inter (Google Fonts)
-- **Backend API Reference**: Flask (Python)
+## ✨ Features
 
-## Getting Started
+### Operator Dashboard (Frontend)
+* **Real-Time Visualization Grid**: Displays dynamic vehicle queues and lane occupancy at a four-way intersection (North, South, East, West).
+* **Interactive Control Panel**: Switch between automated AI scheduling and manual operator override with single-click signal locks.
+* **Blinking Status Indicators**: Real-time traffic light simulators displaying green and red indicators synchronized with the server's state.
+* **Glassmorphic Cyber-Dark UI**: Premium aesthetics using backdrop blur, neon glowing borders, custom grids, and radial gradients.
+
+### AI Engine & Computer Vision (Backend)
+* **Computer Vision Pipeline**: Integrates OpenCV with a background subtractor (MOG2) and morphological filters to count moving vehicles in a video feed.
+* **AI Signal Controller**: Analyzes congestion ratios and dynamically scales green light intervals (between 8s and 30s) to clear high-density lanes first.
+* **Multi-Threaded Server Design**: Separates the OpenCV detection loops/simulators from the Flask API routes using background daemon threads and state-locking mechanisms (`threading.Lock`).
+* **Robust Fallback Mode**: Gracefully degrades to a high-fidelity stochastic traffic simulation if OpenCV or a video file is missing.
+
+---
+
+## 🧰 Tech Stack
+
+| Category | Technology | Description |
+| :--- | :--- | :--- |
+| **Frontend Framework** | React 18 + Vite | Component architecture & high-performance build tool |
+| **Styling & Theme** | Tailwind CSS + shadcn/ui | Backdrop-blur panels and responsive layouts |
+| **Icons** | Lucide React | Clean, scalable vector indicators |
+| **Backend Framework**| Flask (Python 3.x) | REST API endpoints & static assets server |
+| **Computer Vision** | OpenCV (cv2) | Background subtraction & object contour counting |
+| **State Synchronization** | Flask-CORS | Enables secure cross-origin resource requests |
+
+---
+
+## 🏗️ System Architecture
+
+The dashboard uses a decoupled frontend-backend client-server architecture with state locking to prevent data race conditions:
+
+```mermaid
+graph TD
+    Client([Operator Browser Client])
+    --> React["React Frontend UI"]
+    
+    subgraph Python Backend (Flask Server)
+        React -->|Fetch /api/get_counts| API["Flask REST API Endpoint"]
+        React -->|Post /api/set_signal| API
+        
+        API -->|Access State| Lock{"State Lock (Lock)"}
+        Lock -->|Read/Write| State["Global Traffic State"]
+        
+        Detector["OpenCV Detection Thread"] -->|Detect / Simulate| Lock
+    end
+    
+    Detector -->|Process Frame| Video["Video Feed / Fallback Simulator"]
+```
+
+### Architectural Breakdown
+* **Vite Static Asset Delivery**: The frontend React app is built into the backend's static directory (`dist/`) enabling a single process deploy.
+* **Thread-Safe State Access**: The background vehicle detector and the API server access the global traffic metrics within a mutual exclusion lock (`Lock`) to guarantee consistency.
+* **Event-Driven Override**: Triggering a manual override temporarily suspends the AI signal timing loop until the operator releases control back to "Auto" mode.
+
+---
+
+## 📦 How to Run
 
 ### Prerequisites
+* **Node.js** v20 or newer
+* **Python** 3.10 or newer
 
-You'll need Node.js and npm installed on your machine. We recommend using `nvm` (Node Version Manager).
+### 1. Project Setup
+Clone the repository:
+```bash
+git clone https://github.com/vijaybarhate/Smart-Traffic-Control-Dashboard.git
+cd Smart-Traffic-Control-Dashboard
+```
 
-### Installation
+### 2. Frontend Installation & Build
+Install node modules and compile the React application:
+```bash
+npm install
+npm run build
+```
+The compiled files are generated in the `dist` folder.
 
-1. Clone the repository:
-   ```bash
-   git clone <YOUR_GIT_URL>
-   cd tempo-traffic-control
-   ```
+### 3. Backend Setup & Run
+Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-2. Install the frontend dependencies:
-   ```bash
-   npm install
-   ```
+Run the server:
+```bash
+python app.py
+```
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+Open your browser and navigate to: **`http://localhost:5000`**
 
-The dashboard will be available at `http://localhost:5173/` (or the port specified in your terminal).
+*Note: The server will automatically detect the compiled React folder and serve the dashboard directly. If a camera or video file is not available, the server will log a fallback notice and start a stochastic queue simulator, allowing full UI exploration.*
 
-### Connecting to the Backend
+---
 
-By default, the dashboard attempts to connect to a local Flask backend at `http://127.0.0.1:5000`. 
-If the backend is offline, the dashboard gracefully falls back to a simulated traffic feed so you can still preview the UI and animations.
+## 🧠 Challenges Faced
 
-## Project Structure
+- **Thread Congestion & State Race Conditions**: The OpenCV detection thread runs in a continuous loop, while Flask spawns individual request handlers. Reading and writing the traffic totals simultaneously caused occasional state desyncs. We resolved this by wrapping access in a Python `threading.Lock()`, securing data integrity without affecting throughput.
+- **Dependency Versioning**: Interfacing OpenCV with standard packages occasionally created compiler conflicts with standard libraries. Setting up `opencv-python-headless` resolved server deployment requirements without pulling in heavy GUI dependencies.
+- **Fallback Reliability**: To ensure recruiters can run the project out-of-the-box without needing specific cameras or hardware, we built a fallback algorithm. If `cv2` fails to import or the video file is missing, the backend seamlessly launches a simulated queues engine using random variables, maintaining a fully responsive frontend experience.
 
-- `src/components/TrafficDashboard.tsx`: The main dashboard view containing all cards, traffic indicators, and control panels.
-- `src/index.css`: Contains all the custom theming variables, animated gradients, and glassmorphism utilities.
-- `tailwind.config.ts`: Tailwind configuration extending the theme to include our custom fonts and variables.
+---
 
-## License
+## 🔮 Future Improvements
 
-This project is open-source and available under the MIT License.
+- [ ] **Multi-Intersection Network**: Coordinate signals across multiple adjacent intersections (green wave coordination).
+- [ ] **YOLO Model Integration**: Replace simple contour tracking with a deep learning model (e.g., YOLOv8) for precise vehicle classification (buses, trucks, emergency vehicles).
+- [ ] **RTSP Live Stream Integration**: Connect direct network camera feeds for deployment in real urban zones.
+- [ ] **Time-Series Analytics**: Add chart grids displaying average congestion graphs over time.
+
+---
+
+Built with 🖤 by [Vijay Barhate](https://github.com/vijaybarhate)
