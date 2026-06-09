@@ -49,11 +49,11 @@ graph TD
     Client([Operator Browser Client])
     --> React["React Frontend UI"]
     
-    subgraph Python Backend (Flask Server)
+    subgraph backend["Python Backend (Flask Server)"]
         React -->|Fetch /api/get_counts| API["Flask REST API Endpoint"]
         React -->|Post /api/set_signal| API
         
-        API -->|Access State| Lock{"State Lock (Lock)"}
+        API -->|Access State| Lock{"State Lock"}
         Lock -->|Read/Write| State["Global Traffic State"]
         
         Detector["OpenCV Detection Thread"] -->|Detect / Simulate| Lock
